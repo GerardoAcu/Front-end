@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<!--
+  <!DOCTYPE html> → Le dice al navegador que este es un documento HTML5.
+  Sin esto, el navegador podría entrar en "modo quirks" y renderizar mal.
+-->
+
+<html lang="es">
+<!--
+  <html> → Elemento raíz. Todo el documento vive dentro de él.
+  lang="es" → Indica el idioma (español). Ayuda a lectores de pantalla y SEO.
+-->
+
+<head>
+  <!--
+    <head> → Contiene metadatos: información SOBRE la página, no visible directamente.
+    Aquí van: título de pestaña, codificación, estilos, fuentes, etc.
+  -->
+
+  <meta charset="UTF-8" />
+  <!-- <meta charset> → Define la codificación de caracteres.
+       UTF-8 soporta tildes (á, é), ñ, y símbolos especiales. SIN esto → ¿ en lugar de ñ. -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- <meta viewport> → Hace el sitio RESPONSIVE.
+       Sin esto, en celular se vería como una versión desktop miniaturizada. -->
+
+  <title>CV - Acuña Gerardo E.</title>
+  <!-- <title> → Texto que aparece en la pestaña del navegador. No se ve en la página. -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <!--
+    <link> → Vincula recursos externos. Aquí conecta fuentes de Google Fonts.
+    rel="stylesheet" → Le dice al navegador que es una hoja de estilos CSS.
+  -->
+
+  <link rel="stylesheet" href="cv-gerardo.css" />
+  <!--
+    <link rel="stylesheet" href="cv-gerardo.css"> → Vincula el archivo CSS EXTERNO separado.
+    Así separamos la presentación (CSS) de la estructura (HTML).
+    Ventaja: podés editar el diseño sin tocar el HTML, y viceversa.
+    El <style> de abajo y este .css tienen los mismos estilos —
+    en producción real elegiríás uno solo; aquí conviven con fines educativos.
+  -->
+
+  <style>
+    /*
+      <style> → CSS escrito DIRECTAMENTE dentro del HTML (CSS interno).
+      Existe junto al <link> de arriba para que puedas comparar:
+        · CSS externo  → archivo .css separado, vinculado con <link>
+        · CSS interno  → bloque <style> dentro del <head>
+        · CSS inline   → atributo style="" dentro de cada tag (no recomendado)
+      En producción se usa solo el archivo externo.
+    */
+
+    :root {
+      --negro: #111111;
+      --blanco: #f5f5f0;
+      --acento: #e8c547;
+      --gris: #444;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #e9e4d8;
+      color: var(--negro);
+      min-height: 100vh;
+      padding: 3rem 1rem;
+    }
+
+    /* ── CONTENEDOR PRINCIPAL ── */
+    .cv {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--blanco);
+      box-shadow: 8px 8px 0px var(--negro);
+      border: 2px solid var(--negro);
+      overflow: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 2.5rem 3rem 2rem;
+      border-bottom: 2px solid var(--negro);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+      background: var(--blanco);
+    }
+
+    .header-texto h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      letter-spacing: 2px;
+      line-height: 1;
+      color: var(--negro);
+    }
+
+    .header-texto h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--gris);
+      margin-top: 0.5rem;
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid var(--negro);
+      background: var(--negro);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .avatar svg {
+      width: 70px;
+      height: 70px;
+      fill: var(--blanco);
+    }
+
+    /* ── SOBRE MI ── */
+    .sobre-mi {
+      padding: 2rem 3rem;
+      border-bottom: 2px solid var(--negro);
+      background: var(--negro);
+      color: var(--blanco);
+    }
+
+    .sobre-mi h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      color: var(--acento);
+      margin-bottom: 0.75rem;
+    }
+
+    .sobre-mi p {
+      line-height: 1.7;
+      font-size: 0.95rem;
+      max-width: 600px;
+    }
+
+    /* ── GRID PRINCIPAL ── */
+    .contenido {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+    }
+
+    /* ── COLUMNA IZQUIERDA ── */
+    .col-izq {
+      border-right: 2px solid var(--negro);
+      padding: 2rem;
+    }
+
+    .seccion {
+      margin-bottom: 2rem;
+    }
+
+    .seccion-titulo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      background: var(--negro);
+      color: var(--blanco);
+      padding: 0.4rem 0.8rem;
+      display: inline-block;
+      margin-bottom: 1.2rem;
+    }
+
+    /* Contacto */
+    .contacto-lista {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .contacto-lista li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+    }
+
+    .contacto-lista .icon {
+      font-size: 1rem;
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    /* Educación */
+    .edu-item {
+      margin-bottom: 1.2rem;
+    }
+
+    .edu-fecha {
+      font-size: 0.78rem;
+      color: var(--gris);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .edu-nivel {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin: 0.1rem 0;
+    }
+
+    .edu-lugar {
+      font-size: 0.88rem;
+      color: var(--gris);
+    }
+
+    /* Idiomas */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      border: 2px solid var(--negro);
+      padding: 0.25rem 0.6rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── COLUMNA DERECHA ── */
+    .col-der {
+      padding: 2rem;
+      background: var(--negro);
+      color: var(--blanco);
+    }
+
+    .col-der .seccion-titulo {
+      background: var(--acento);
+      color: var(--negro);
+    }
+
+    .col-der h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      color: var(--acento);
+      margin-bottom: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .col-der h4:first-of-type {
+      margin-top: 0;
+    }
+
+    .intereses-lista {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .intereses-lista li {
+      border: 1.5px solid rgba(255,255,255,0.3);
+      padding: 0.25rem 0.7rem;
+      font-size: 0.85rem;
+      border-radius: 2px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .intereses-lista li:hover {
+      border-color: var(--acento);
+      color: var(--acento);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 2px solid var(--negro);
+      padding: 1rem 3rem;
+      background: var(--blanco);
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--gris);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 600px) {
+      header { flex-direction: column; padding: 1.5rem; }
+      .contenido { grid-template-columns: 1fr; }
+      .col-izq { border-right: none; border-bottom: 2px solid var(--negro); }
+      .sobre-mi, .col-izq, .col-der { padding: 1.5rem; }
+    }
+  </style>
+
+</head>
+
+<body>
+  <!--
+    <body> → Todo lo VISIBLE de la página.
+    Es el contenedor de todo el contenido que el usuario ve e interactúa.
+  -->
+
+  <div class="cv">
+    <!--
+      <div> → "Division" / caja genérica sin significado semántico.
+      Se usa para agrupar elementos y aplicar estilos (class="cv").
+      Aquí es el wrapper del CV completo.
+    -->
+
+    <!-- ════════════════════════════════
+         <header> → Encabezado del documento/sección.
+         TAG SEMÁNTICO: le dice al navegador "esto es la cabecera".
+         Contiene: nombre principal y avatar.
+         ════════════════════════════════ -->
+    <header>
+      <div class="header-texto">
+        <h1>Acuña Gerardo E.</h1>
+        <!--
+          <h1> → Heading nivel 1. El título MÁS IMPORTANTE de la página.
+          Solo debe haber UN <h1> por página.
+          Esencial para SEO y accesibilidad.
+        -->
+        <h2>Estudiante · Desarrollo de Software</h2>
+        <!--
+          <h2> → Heading nivel 2. Subtítulo, jerarquía inferior al h1.
+          Los headings van de h1 a h6, de mayor a menor importancia.
+        -->
+      </div>
+
+      <figure class="avatar">
+        <!--
+          <figure> → Contenedor para contenido ilustrativo (imágenes, íconos, gráficos).
+          TAG SEMÁNTICO: agrupa contenido visual con su contexto.
+        -->
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Foto de perfil">
+          <!--
+            <svg> → "Scalable Vector Graphics". Gráfico vectorial incrustado.
+            aria-label → Texto alternativo para lectores de pantalla (accesibilidad).
+          -->
+          <circle cx="50" cy="35" r="22"/>
+          <ellipse cx="50" cy="85" rx="35" ry="25"/>
+        </svg>
+      </figure>
+    </header>
+
+    <!-- ════════════════════════════════
+         <section> → Sección temática del documento.
+         TAG SEMÁNTICO: agrupa contenido relacionado por tema.
+         Se diferencia de <div> porque tiene significado propio.
+         Aquí: sección "Sobre mí".
+         ════════════════════════════════ -->
+    <section class="sobre-mi">
+      <h3>Sobre mí</h3>
+      <!--
+        <h3> → Heading nivel 3. Subtítulo dentro de una sección.
+        Mantiene la jerarquía: h1 → h2 → h3.
+      -->
+      <p>
+        <!--
+          <p> → "Paragraph". Bloque de texto narrativo.
+          El tag más usado para texto descriptivo.
+        -->
+        Soy hijo de Daniel Acuña y Nora Palavecino, tengo 20 años y nací el 11 de enero de 2006.
+        Soy de Río Seco, Tucumán, Argentina, y actualmente soy estudiante. Soy el menor de tres
+        hermanos (Nicolás, Javier y Manuel).
+      </p>
+    </section>
+
+    <!-- ════════════════════════════════
+         GRID DE DOS COLUMNAS
+         <main> → Contenido principal único de la página.
+         TAG SEMÁNTICO: indica al navegador cuál es el contenido central.
+         Solo debe haber UN <main> por página.
+         ════════════════════════════════ -->
+    <main class="contenido">
+
+      <!-- ── COLUMNA IZQUIERDA ── -->
+      <aside class="col-izq">
+        <!--
+          <aside> → Contenido complementario/secundario.
+          TAG SEMÁNTICO: información lateral que complementa el contenido principal.
+          Aquí: contacto, educación e idiomas (datos de soporte del CV).
+        -->
+
+        <!-- SECCIÓN CONTACTO -->
+        <section class="seccion">
+          <h3 class="seccion-titulo">Contacto</h3>
+
+          <ul class="contacto-lista">
+            <!--
+              <ul> → "Unordered List". Lista SIN orden específico (con viñetas por defecto).
+              Se usa cuando el orden de los ítems NO importa.
+              Para listas con orden se usa <ol> (Ordered List).
+            -->
+            <li>
+              <!--
+                <li> → "List Item". Cada elemento de la lista.
+                Siempre va dentro de <ul> o <ol>.
+              -->
+              <span class="icon" aria-hidden="true">📞</span>
+              <!--
+                <span> → Contenedor INLINE sin semántica.
+                Como <div> pero para texto/elementos en línea.
+                aria-hidden="true" → Oculta el emoji a lectores de pantalla.
+              -->
+              <span>3863537659</span>
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">🏠</span>
+              <address>Avenida Himno Patrio 461, Río Seco</address>
+              <!--
+                <address> → TAG SEMÁNTICO para datos de contacto/dirección.
+                Le indica al navegador y buscadores que esto es una dirección.
+              -->
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">✉️</span>
+              <a href="mailto:gerardoacu2006@gmail.com">gerardoacu2006@gmail.com</a>
+              <!--
+                <a> → "Anchor". Enlace / hipervínculo.
+                href="mailto:..." → Abre el cliente de correo al hacer clic.
+              -->
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">📷</span>
+              <a href="https://instagram.com/gerardO_acuna" target="_blank" rel="noopener noreferrer">
+                gerardO_acuna
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <!-- SECCIÓN EDUCACIÓN -->
+        <section class="seccion">
+          <h3 class="seccion-titulo">Educación</h3>
+
+          <article class="edu-item">
+            <!--
+              <article> → Contenido independiente y reutilizable.
+              TAG SEMÁNTICO: cada entrada educativa es una unidad propia.
+            -->
+            <time class="edu-fecha" datetime="2011/2017">2011 – 2017</time>
+            <!--
+              <time> → TAG SEMÁNTICO para fechas y horas.
+              datetime="..." → Formato legible por máquinas (ISO 8601).
+            -->
+            <p class="edu-nivel">Primaria</p>
+            <p class="edu-lugar">Escuela Osvaldo Magnasco</p>
+          </article>
+
+          <article class="edu-item">
+            <time class="edu-fecha" datetime="2018/2024">2018 – 2024</time>
+            <p class="edu-nivel">Secundaria</p>
+            <p class="edu-lugar">Escuela Técnica Río Seco</p>
+          </article>
+
+          <article class="edu-item">
+            <time class="edu-fecha" datetime="2025">2025 – Actualidad</time>
+            <p class="edu-nivel">Universidad</p>
+            <p class="edu-lugar">Desarrollo y Calidad de Software</p>
+          </article>
+        </section>
+
+        <!-- SECCIÓN IDIOMAS -->
+        <section class="seccion">
+          <h3 class="seccion-titulo">Idiomas</h3>
+          <div class="tags">
+            <span class="tag">Español nativo</span>
+            <span class="tag">Inglés básico</span>
+          </div>
+        </section>
+
+      </aside>
+
+      <!-- ── COLUMNA DERECHA ── -->
+      <section class="col-der">
+        <h3 class="seccion-titulo">Más sobre mí…</h3>
+
+        <h4>🎵 Música</h4>
+        <ul class="intereses-lista">
+          <li>Rock 2000's</li>
+          <li>Rock alternativo</li>
+          <li>Trap</li>
+        </ul>
+
+        <h4>❤️ Me gusta</h4>
+        <ul class="intereses-lista">
+          <li>Películas</li>
+          <li>Básquet</li>
+          <li>Fórmula 1</li>
+          <li>Videojuegos</li>
+          <li>Andar en bici</li>
+          <li>Gatos</li>
+          <li>Hamburguesas</li>
+        </ul>
+
+      </section>
+    </main>
+
+    <!-- ════════════════════════════════
+         <footer> → Pie de página del documento/sección.
+         TAG SEMÁNTICO: cierre del contenido, datos legales, créditos.
+         ════════════════════════════════ -->
+    <footer>
+      <p>CV · Gerardo E. Acuña · Río Seco, Tucumán · 2026</p>
+    </footer>
+
+  </div><!-- /div.cv -->
+
+</body>
+</html>
