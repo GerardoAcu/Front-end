@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tienda de Ropa</title>
+</head>
+<body>
+
+<h1>Tienda de Ropa 👕</h1>
+
+<h2>Agregar prenda (POST)</h2>
+<input type="text" id="nombre" placeholder="Nombre">
+<input type="number" id="precio" placeholder="Precio">
+<button onclick="agregar()">Agregar</button>
+
+<h2>Lista de prendas (GET)</h2>
+<ul id="lista"></ul>
+
+<h2>Modificar prenda completa (PUT)</h2>
+<input type="number" id="idPut" placeholder="ID">
+<input type="text" id="nuevoNombre" placeholder="Nuevo nombre">
+<input type="number" id="nuevoPrecio" placeholder="Nuevo precio">
+<button onclick="modificarCompleto()">Modificar</button>
+
+<h2>Modificar solo precio (PATCH)</h2>
+<input type="number" id="idPatch" placeholder="ID">
+<input type="number" id="precioPatch" placeholder="Nuevo precio">
+<button onclick="modificarParcial()">Modificar precio</button>
+
+<h2>Eliminar prenda (DELETE)</h2>
+<input type="number" id="idDelete" placeholder="ID">
+<button onclick="eliminar()">Eliminar</button>
+
+<script>
+let ropa = [];
+let id = 1;
+
+// GET (mostrar datos)
+function mostrar() {
+    let lista = document.getElementById("lista");
+    lista.innerHTML = "";
+
+    ropa.forEach(item => {
+        lista.innerHTML += `<li>ID: ${item.id} - ${item.nombre} - $${item.precio}</li>`;
+    });
+}
+
+// POST (agregar)
+function agregar() {
+    let nombre = document.getElementById("nombre").value;
+    let precio = document.getElementById("precio").value;
+
+    ropa.push({ id: id++, nombre: nombre, precio: precio });
+    mostrar();
+}
+
+// PUT (modificar todo)
+function modificarCompleto() {
+    let idBuscar = document.getElementById("idPut").value;
+    let nuevoNombre = document.getElementById("nuevoNombre").value;
+    let nuevoPrecio = document.getElementById("nuevoPrecio").value;
+
+    ropa = ropa.map(item => {
+        if (item.id == idBuscar) {
+            return { id: item.id, nombre: nuevoNombre, precio: nuevoPrecio };
+        }
+        return item;
+    });
+
+    mostrar();
+}
+
+// PATCH (modificar solo una parte)
+function modificarParcial() {
+    let idBuscar = document.getElementById("idPatch").value;
+    let nuevoPrecio = document.getElementById("precioPatch").value;
+
+    ropa = ropa.map(item => {
+        if (item.id == idBuscar) {
+            item.precio = nuevoPrecio;
+        }
+        return item;
+    });
+
+    mostrar();
+}
+
+// DELETE (eliminar)
+function eliminar() {
+    let idBuscar = document.getElementById("idDelete").value;
+
+    ropa = ropa.filter(item => item.id != idBuscar);
+    mostrar();
+}
+</script>
+
+</body>
+</html>
